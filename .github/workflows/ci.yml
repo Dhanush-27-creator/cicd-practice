@@ -1,0 +1,25 @@
+name: My first CI pipeline
+
+on:
+push:
+branches: [main]
+pull_request:
+branches: [main]
+
+
+jobs:
+hello:
+runs-on: ubuntu-latest
+
+steps:
+- name: Checkout code
+ uses: actions/checkout@v3
+
+- name: Say Hello
+  run: echo "Hello CI! Pipeline is working!"
+
+- name: Show date and time
+  run: date
+
+- name: List files
+  run: ls -la
