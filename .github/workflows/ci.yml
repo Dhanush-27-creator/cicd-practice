@@ -1,4 +1,5 @@
-name: My first CI pipeline
+name: My first CI Pipeline
+
 
 on:
  push:
