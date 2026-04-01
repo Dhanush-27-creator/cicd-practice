@@ -16,5 +16,8 @@ jobs:
       - name: Say Hello
         run: echo "Hello CI! Pipeline is working!"
 
-      - name: Show date
+      - name: Show date and time
         run: date
+
+      - name: List files
+        run: ls -la
