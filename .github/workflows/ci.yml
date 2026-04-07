@@ -2,7 +2,7 @@ name: My First CI Pipeline
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
     branches: [main]
 
@@ -11,13 +11,45 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Say Hello
         run: echo "Hello CI! Pipeline is working!"
 
-      - name: Show date and time
+      - name: Show date
         run: date
 
-      - name: List files
-        run: ls -la
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install flake8
+        run: pip install flake8
+
+      - name: Run lint check
+        run: flake8 app.py
+
+  env-demo:
+    runs-on: ubuntu-latest
+    env:
+      APP_NAME: cicd-practice
+      APP_ENV: staging
+    steps:
+      - name: Show environment variables
+        run: |
+          echo "App name is: $APP_NAME"
+          echo "Environment is: $APP_ENV"
+
+      - name: Use secret safely
+        run: |
+          echo "Secret exists: ${{ secrets.MY_APP_SECRET != '' }}"
+          echo "Secret length: ${#MY_SECRET}"
+        env:
+          MY_SECRET: ${{ secrets.MY_APP_SECRET }}
